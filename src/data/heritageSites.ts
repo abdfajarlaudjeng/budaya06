@@ -1534,6 +1534,172 @@ export const HERITAGE_SITES: HeritageSite[] = [
       { label: 'Material', value: 'Kayu Ulin & Rangka Seng Belanda' },
       { label: 'Zona', value: 'Muara Pantai Boya, Banawa' }
     ]
+  },
+  {
+    id: 'BUDAYA-352',
+    title: 'Pusentasi (Pusat Laut)',
+    localName: 'Pusentasi',
+    kelurahan: 'Kelurahan Tanjung Batu',
+    establishedYear: 'Alami / Prasejarah',
+    period: 'Geologi Pesisir & Legenda Kaili',
+    category: 'Situs',
+    locationDescription: 'Desa Towale / Pesisir Banawa, Kabupaten Donggala (-0.7101073, 119.6638642)',
+    coordinates: {
+      lat: -0.7101073,
+      lng: 119.6638642,
+      mapX: 22,
+      mapY: 76,
+    },
+    thumbnail: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfH06gTE6NxCKLfyPO5y1WUmqfqCivx76S_jFkUcksheiTQzsxHUQXp1DyKPS0kvpgo4WjUjxsb0ugjcUeQApIPSZXlocAXk2PgxqrQ-hjA05LfBih0lLBhGdWr7kkYGQOCJ5tPg=s680-w680-h510-rw',
+    bannerImage: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfH06gTE6NxCKLfyPO5y1WUmqfqCivx76S_jFkUcksheiTQzsxHUQXp1DyKPS0kvpgo4WjUjxsb0ugjcUeQApIPSZXlocAXk2PgxqrQ-hjA05LfBih0lLBhGdWr7kkYGQOCJ5tPg=s680-w680-h510-rw',
+    pastPhoto: {
+      url: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfH06gTE6NxCKLfyPO5y1WUmqfqCivx76S_jFkUcksheiTQzsxHUQXp1DyKPS0kvpgo4WjUjxsb0ugjcUeQApIPSZXlocAXk2PgxqrQ-hjA05LfBih0lLBhGdWr7kkYGQOCJ5tPg=s680-w680-h510-rw',
+      caption: 'Dokumentasi Sumur Raksasa Alami Pusentasi Donggala (Dok. Jamrin Abubakar).',
+      source: 'Koleksi Cerita Rakyat Kabupaten Donggala',
+      year: '1970'
+    },
+    currentPhoto: {
+      url: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfH06gTE6NxCKLfyPO5y1WUmqfqCivx76S_jFkUcksheiTQzsxHUQXp1DyKPS0kvpgo4WjUjxsb0ugjcUeQApIPSZXlocAXk2PgxqrQ-hjA05LfBih0lLBhGdWr7kkYGQOCJ5tPg=s680-w680-h510-rw',
+      caption: 'Pusentasi (Pusat Laut) dengan air asin jernih kebiruan berdiameter 10 meter dan kedalaman 7 meter.',
+      conditionStatus: 'Terawat'
+    },
+    panorama360: {
+      url: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfH06gTE6NxCKLfyPO5y1WUmqfqCivx76S_jFkUcksheiTQzsxHUQXp1DyKPS0kvpgo4WjUjxsb0ugjcUeQApIPSZXlocAXk2PgxqrQ-hjA05LfBih0lLBhGdWr7kkYGQOCJ5tPg=s680-w680-h510-rw',
+      type: 'sphere',
+      initialYaw: 0,
+      initialPitch: 0,
+      hotspots: [
+        {
+          id: 'pusentasi-hotspot-1',
+          title: 'Sumur Alami Air Asin',
+          description: 'Berjarak 300 meter dari pantai dan memiliki fenomena unik pasang surut berkebalikan dari air laut.',
+          yaw: 10,
+          pitch: -5
+        }
+      ]
+    },
+    video360: {
+      url: 'https://www.youtube.com/watch?v=zgKjAvmdY5o',
+      title: 'Dokumenter Video Pusentasi Donggala',
+      provider: 'youtube'
+    },
+    videoDocumentaryUrl: 'https://www.youtube.com/watch?v=zgKjAvmdY5o',
+    briefDescription: 'Sumur Raksasa alami berdiameter 10 meter dengan kedalaman 7 meter berair asin jernih kebiruan yang pasang surutnya berkebalikan dengan air laut.',
+    historicalSignificance: 'Pusentasi (pusat Laut) adalah Sumur Raksasa yang terbentuk secara alami berdiameter 10 meter dan mempunyai kedalaman 7 meter. Nama Pusentasi dalam bahasa Kaili (suku asli Sulawesi Tengah) berasal dari kata "Pusen" berarti Pusat dan "Tasi" berarti Laut. Air di dalamnya berasa asin seperti air laut dan berwarna jernih kebiru-biruan. Diduga ada sebuah lubang yang menghubungkan antara pantai dan pusentasi, karenanya jaraknya sekitar 300 meter. Keunikan pusentasi airnya tidak pernah keruh dan akan mengalami pasang apabila air laut sedang surut dan demikian pula sebaliknya. Memiliki legenda cerita rakyat yang oleh Jamrin Abubakar seorang wartawan di Donggala telah menulisnya dalam sebuah buku berjudul Pusentasi Cerita Rakyat Kabupaten Donggala.',
+    architecturalStyle: 'Formasi Geologi Alami Karst Pesisir Selat Makassar',
+    maritimeRelevance: 'Memiliki keterhubungan hidrologis unik dengan laut Selat Makassar serta menjadi simbol kekayaan geologi dan cerita rakyat maritim Donggala.',
+    audioNarration: {
+      title: 'Misteri Sumur Raksasa Pusentasi Donggala',
+      speakerName: 'Pemandu Budaya Donggala',
+      durationText: '2 Menit 10 Detik',
+      transcript: 'Tabe! Dalam bahasa Kaili, Pusen berarti Pusat dan Tasi berarti Laut. Sumur raksasa alami berdiameter 10 meter dengan kedalaman 7 meter ini airnya jernih kebiruan dan berasa asin seperti air laut, menyimpan legenda rakyat Kabupaten Donggala yang memesona.'
+    },
+    talkingPersona: {
+      name: 'Pusentasi (Pusat Laut)',
+      role: 'Situs Alami & Warisan Budaya Donggala',
+      avatar: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfH06gTE6NxCKLfyPO5y1WUmqfqCivx76S_jFkUcksheiTQzsxHUQXp1DyKPS0kvpgo4WjUjxsb0ugjcUeQApIPSZXlocAXk2PgxqrQ-hjA05LfBih0lLBhGdWr7kkYGQOCJ5tPg=s680-w680-h510-rw',
+      greeting: 'Tabe! Saya Pusentasi, sumur raksasa alami berair asin jernih di pesisir Banawa, Donggala.',
+      systemPrompt: 'Anda adalah persona Pusentasi (Pusat Laut) Kabupaten Donggala. Karakter ramah, bersahaja, menjelaskan keajaiban alam dan legenda kaili pusentasi.',
+      sampleQuestions: [
+        'Mengapa airmu berasa asin seperti laut?',
+        'Bagaimana kaitan pasang surutmu dengan air laut?',
+        'Ceritakan legenda cerita rakyat di balik Pusentasi'
+      ]
+    },
+    trivia: [
+      'Berasal dari bahasa Kaili: Pusen (Pusat) dan Tasi (Laut).',
+      'Airnya tidak pernah keruh dan akan pasang ketika air laut surut, dan sebaliknya.',
+      'Diabadikan oleh wartawan Jamrin Abubakar dalam buku Cerita Rakyat Kabupaten Donggala.'
+    ],
+    keyFacts: [
+      { label: 'Diameter', value: '10 Meter' },
+      { label: 'Kedalaman', value: '7 Meter' },
+      { label: 'Jarak ke Pantai', value: '±300 Meter' },
+      { label: 'Kategori', value: 'Situs Cagar Budaya & Alam' }
+    ]
+  },
+  {
+    id: 'gedung-bioskop',
+    title: 'Gedung Bioskop Donggala (Gembira Theater)',
+    localName: 'Gembira Theater Donggala',
+    kelurahan: 'Kelurahan Boya',
+    establishedYear: '1950',
+    period: 'Era Pasca-Kemerdekaan & Modern Klasik',
+    category: 'Kawasan',
+    locationDescription: 'Kawasan Pusat Kota Donggala, Banawa (-0.6683706, 119.7385271)',
+    coordinates: {
+      lat: -0.6683706,
+      lng: 119.7385271,
+      mapX: 46,
+      mapY: 34,
+    },
+    thumbnail: 'https://assets-a2.kompasiana.com/items/album/2025/06/19/dua-bekas-loket-pertama-di-gedung-gembira-theater-yang-sangat-lama-digunakan-foto-jamrin-ab-6853f963ed641537973f6932.jpg?t=o&v=770',
+    bannerImage: 'https://assets-a2.kompasiana.com/items/album/2025/06/19/dua-bekas-loket-pertama-di-gedung-gembira-theater-yang-sangat-lama-digunakan-foto-jamrin-ab-6853f963ed641537973f6932.jpg?t=o&v=770',
+    pastPhoto: {
+      url: 'https://assets-a2.kompasiana.com/items/album/2025/06/19/dua-bekas-loket-pertama-di-gedung-gembira-theater-yang-sangat-lama-digunakan-foto-jamrin-ab-6853f963ed641537973f6932.jpg?t=o&v=770',
+      caption: 'Dua bekas loket tiket pertama di gedung Gembira Theater yang sangat lama digunakan (Foto: Jamrin Abubakar).',
+      source: 'Arsip Jamrin Abubakar',
+      year: '1960'
+    },
+    currentPhoto: {
+      url: 'https://assets-a2.kompasiana.com/items/album/2025/06/19/dua-bekas-loket-pertama-di-gedung-gembira-theater-yang-sangat-lama-digunakan-foto-jamrin-ab-6853f963ed641537973f6932.jpg?t=o&v=770',
+      caption: 'Sisa fisik loket tiket bioskop tua Gembira Theater Donggala.',
+      conditionStatus: 'Sisa Struktur/Puing'
+    },
+    panorama360: {
+      url: 'https://assets-a2.kompasiana.com/items/album/2025/06/19/dua-bekas-loket-pertama-di-gedung-gembira-theater-yang-sangat-lama-digunakan-foto-jamrin-ab-6853f963ed641537973f6932.jpg?t=o&v=770',
+      type: 'sphere',
+      initialYaw: 0,
+      initialPitch: 0,
+      hotspots: [
+        {
+          id: 'bioskop-hotspot-1',
+          title: 'Loket Tiket Layar Perak',
+          description: 'Dua loket tiket bersejarah tempat warga membeli karcis menonton film layar lebar.',
+          yaw: 0,
+          pitch: 0
+        }
+      ]
+    },
+    video360: {
+      url: 'https://www.youtube.com/watch?v=zgKjAvmdY5o',
+      title: 'Nostalgia Bioskop Donggala',
+      provider: 'youtube'
+    },
+    videoDocumentaryUrl: 'https://www.youtube.com/watch?v=zgKjAvmdY5o',
+    briefDescription: 'Gedung bioskop bersejarah Gembira Theater yang menjadi pusat hiburan layar perak masyarakat Donggala sejak masa keemasannya.',
+    historicalSignificance: 'Bioskop Donggala (Gembira Theater) merupakan saksi bisu denyut kehidupan urban dan budaya hiburan rakyat di Donggala pada era keemasan pelabuhan dan perdagangan. Bekas loket tiketnya masih memperlihatkan jejak interaksi masyarakat menikmati film-film klasik masa lampau.',
+    architecturalStyle: 'Arsitektur Komersial Pertengahan Abad ke-20',
+    maritimeRelevance: 'Menjadi tempat rekreasi hiburan bagi para awak kapal niaga dan masyarakat pesisir saat sandar di Pelabuhan Donggala.',
+    audioNarration: {
+      title: 'Layar Perak di Pesisir Banawa',
+      speakerName: 'Pemandu Budaya Donggala',
+      durationText: '1 Menit 45 Detik',
+      transcript: 'Gembira Theater adalah detak hiburan perfilman tempo dulu di Donggala. Di loket bersejarah inilah masyarakat berbondong-bondong mengantre karcis untuk menyaksikan keajaiban film layar perak.'
+    },
+    talkingPersona: {
+      name: 'Gedung Bioskop Donggala',
+      role: 'Saksi Sejarah Hiburan Layar Perak',
+      avatar: 'https://assets-a2.kompasiana.com/items/album/2025/06/19/dua-bekas-loket-pertama-di-gedung-gembira-theater-yang-sangat-lama-digunakan-foto-jamrin-ab-6853f963ed641537973f6932.jpg?t=o&v=770',
+      greeting: 'Tabe! Selamat datang di bekas loket Gembira Theater, gedung bioskop kebanggaan warga Donggala tempo dulu.',
+      systemPrompt: 'Anda adalah persona Gedung Bioskop Donggala (Gembira Theater). Ceritakan tentang kenangan film klasik, dua loket tiket legendaris, dan suasana ramai masyarakat Donggala saat menonton.',
+      sampleQuestions: [
+        'Kapan bioskop ini pertama kali beroperasi?',
+        'Film apa saja yang populer di Gembira Theater?',
+        'Bagaimana cerita di balik dua loket tiket yang tersisa?'
+      ]
+    },
+    trivia: [
+      'Dikenal masyarakat sebagai Gembira Theater.',
+      'Memiliki dua lubang loket tiket bersejarah yang diabadikan oleh jurnalis Jamrin Abubakar.',
+      'Pusat berkumpulnya kawula muda dan masyarakat Donggala menikmati film layar perak.'
+    ],
+    keyFacts: [
+      { label: 'Nama Populer', value: 'Gembira Theater' },
+      { label: 'Fungsi Awal', value: 'Bioskop Layar Lebar' },
+      { label: 'Kategori', value: 'Kawasan Bersejarah' },
+      { label: 'Lokasi', value: 'Pusat Kota Donggala' }
+    ]
   }
 ];
 

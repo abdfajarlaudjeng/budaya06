@@ -4,7 +4,9 @@ import {
   Map, 
   Volume2, 
   VolumeX, 
-  Users
+  Users,
+  Database,
+  Plus
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -13,6 +15,7 @@ interface NavbarProps {
   onOpenTantanganPenjelajah?: () => void;
   onOpenAboutUs: () => void;
   onOpenGoogleWorkspace?: () => void;
+  onOpenInputData?: () => void;
   isGoogleConnected?: boolean;
   visitedCount?: number;
   totalSites?: number;
@@ -24,6 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   onSelectTab,
   onOpenAboutUs,
+  onOpenInputData,
   isAmbientPlaying,
   onToggleAmbient
 }) => {
@@ -86,9 +90,23 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </nav>
 
-          {/* Right Action Tools: Tentang Kami & Musik Latar */}
+          {/* Right Action Tools: Input Data, Tentang Kami & Musik Latar */}
           <div className="flex items-center gap-2 sm:gap-2.5">
             
+            {/* Input Data Objek Budaya Button */}
+            {onOpenInputData && (
+              <button
+                id="btn-nav-input-data"
+                onClick={onOpenInputData}
+                title="Input Data Objek Budaya Donggala & Simpan Otomatis di Link"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#C85A32]/10 border border-[#C85A32]/30 hover:bg-[#C85A32] text-[#C85A32] hover:text-white text-xs font-bold shadow-xs transition-all cursor-pointer group"
+              >
+                <Plus className="w-3.5 h-3.5 group-hover:rotate-90 transition-transform" />
+                <span className="hidden sm:inline">Input Data Objek</span>
+                <span className="sm:hidden">Input</span>
+              </button>
+            )}
+
             {/* Tentang Kami Icon Button */}
             <button
               id="btn-nav-about-us"
@@ -128,7 +146,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         </div>
 
-        {/* Mobile Navigation Row: Beranda, Peta Interaktif & Tentang Kami */}
+        {/* Mobile Navigation Row: Beranda, Peta Interaktif, Input Data & Tentang Kami */}
         <div className="flex md:hidden items-center justify-around py-2 border-t border-stone-200 text-xs">
           <button
             onClick={() => onSelectTab('sites')}
@@ -148,6 +166,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Map className="w-3.5 h-3.5" />
             <span>Peta</span>
           </button>
+          {onOpenInputData && (
+            <button
+              onClick={onOpenInputData}
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[#C85A32] bg-[#C85A32]/10 hover:bg-[#C85A32]/20 font-bold transition-all"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>Input</span>
+            </button>
+          )}
           <button
             onClick={onOpenAboutUs}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-stone-600 hover:text-stone-900 hover:bg-stone-100 font-medium transition-all"

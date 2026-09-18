@@ -13,6 +13,12 @@ import { TantanganPenjelajahModal } from './components/TantanganPenjelajahModal'
 import { AboutProjectModal } from './components/AboutProjectModal';
 import { GoogleWorkspaceModal } from './components/GoogleWorkspaceModal';
 import { AdminAccessModal } from './components/AdminAccessModal';
+import { InputDataModal } from './components/InputDataModal';
+import { 
+  parsePortableSiteFromURL, 
+  rawInputToHeritageSite, 
+  generateSiteShareLink 
+} from './utils/siteDataHelper';
 import { soundscape } from './services/soundscape';
 import { getSiteVisitCount, recordSiteVisit, formatVisitCount } from './utils/visitTracker';
 import { initAuth } from './services/googleAuth';
@@ -27,7 +33,9 @@ import {
   Trophy,
   ArrowLeft,
   Eye,
-  Lock
+  Lock,
+  Plus,
+  Database
 } from 'lucide-react';
 
 export function App() {
@@ -111,6 +119,125 @@ export function App() {
 
   const isCustomDataActive = sitesData !== heritageSites;
 
+  // State for Input Data Objek Budaya Modal
+  const [isInputDataModalOpen, setIsInputDataModalOpen] = useState(false);
+
+  // Sync with Server Custom Sites & Portable Link on Mount
+  useEffect(() => {
+    // 1. Check for portable encoded site in URL
+    const portableSite = parsePortableSiteFromURL();
+    if (portableSite) {
+      setSitesData(prev => {
+        const exists = prev.some(s => s.id === portableSite.id);
+        const updated = exists ? prev.map(s => s.id === portableSite.id ? portableSite : s) : [portableSite, ...prev];
+        try {
+          localStorage.setItem('donggala_custom_sites', JSON.stringify(updated));
+        } catch (e) {
+          console.warn(e);
+        }
+        return updated;
+      });
+      setSelectedSite(portableSite);
+      setActiveTab('map');
+      recordSiteVisit(portableSite.id);
+    }
+
+    // 2. Fetch server persisted sites from /api/sites
+    fetch('/api/sites')
+      .then(res => res.json())
+      .then(data => {
+        if (data && Array.isArray(data.sites) && data.sites.length > 0) {
+          const serverHeritageSites = data.sites.map(rawInputToHeritageSite);
+          setSitesData(prev => {
+            const merged = [...prev];
+            for (const sSite of serverHeritageSites) {
+              const idx = merged.findIndex(s => s.id === sSite.id);
+              if (idx >= 0) {
+                merged[idx] = sSite;
+              } else {
+                merged.push(sSite);
+              }
+            }
+            return merged;
+          });
+        }
+      })
+      .catch(err => console.warn('Fetch server sites failed:', err));
+  }, []);
+
+  // Save / Update Cultural Site Handler (Automatic Link & Storage)
+  const handleSaveCulturalSite = (newSite: HeritageSite) => {
+    setSitesData(prev => {
+      const existingIdx = prev.findIndex(s => s.id === newSite.id);
+      let updated: HeritageSite[];
+      if (existingIdx >= 0) {
+        updated = [...prev];
+        updated[existingIdx] = newSite;
+      } else {
+        updated = [newSite, ...prev];
+      }
+      try {
+        localStorage.setItem('donggala_custom_sites', JSON.stringify(updated));
+      } catch (e) {
+        console.warn(e);
+      }
+      return updated;
+    });
+    setSelectedSite(newSite);
+    
+    // Automatically update browser URL without reload so the link is immediately shareable
+    const directUrl = `?tab=map&site=${encodeURIComponent(newSite.id)}`;
+    window.history.replaceState(null, '', directUrl);
+  };
+
+  // Batch Import Cultural Sites Handler
+  const handleBatchImportCulturalSites = (importedList: HeritageSite[]) => {
+    setSitesData(prev => {
+      const merged = [...prev];
+      for (const item of importedList) {
+        const idx = merged.findIndex(s => s.id === item.id);
+        if (idx >= 0) {
+          merged[idx] = item;
+        } else {
+          merged.push(item);
+        }
+      }
+      try {
+        localStorage.setItem('donggala_custom_sites', JSON.stringify(merged));
+      } catch (e) {
+        console.warn(e);
+      }
+      return merged;
+    });
+
+    if (importedList.length > 0) {
+      setSelectedSite(importedList[0]);
+      const directUrl = `?tab=map&site=${encodeURIComponent(importedList[0].id)}`;
+      window.history.replaceState(null, '', directUrl);
+    }
+  };
+
+  // Delete Cultural Site Handler
+  const handleDeleteCulturalSite = (siteId: string) => {
+    setSitesData(prev => {
+      const updated = prev.filter(s => s.id !== siteId);
+      try {
+        localStorage.setItem('donggala_custom_sites', JSON.stringify(updated));
+      } catch (e) {
+        console.warn(e);
+      }
+      return updated;
+    });
+
+    fetch(`/api/sites/${encodeURIComponent(siteId)}`, { method: 'DELETE' })
+      .catch(e => console.warn('Delete site server error:', e));
+
+    if (selectedSite.id === siteId && sitesData.length > 1) {
+      const nextSite = sitesData.find(s => s.id !== siteId) || heritageSites[0];
+      setSelectedSite(nextSite);
+    }
+  };
+
   // Support direct query param routing (?tab=map&site=kpm-office-donggala)
   useEffect(() => {
     try {
@@ -126,7 +253,7 @@ export function App() {
         const found = sitesData.find(s => s.id === siteParam);
         if (found) {
           setSelectedSite(found);
-          recordVisit(found.id);
+          recordSiteVisit(found.id);
         }
       }
     } catch (e) {
@@ -247,6 +374,7 @@ export function App() {
         }}
         onOpenTantanganPenjelajah={() => setIsTantanganPenjelajahOpen(true)}
         onOpenAboutUs={() => setIsAboutOpen(true)}
+        onOpenInputData={() => setIsInputDataModalOpen(true)}
         visitedCount={visitedSiteIds.length}
         totalSites={sitesData.length}
         isAmbientPlaying={isAmbientPlaying}
@@ -336,6 +464,7 @@ export function App() {
                 recordVisit(s.id);
               }}
               onOpen360Tour={(s) => handleOpen360(s)}
+              onOpenInputData={() => setIsInputDataModalOpen(true)}
             />
 
             {/* Bagian Bawah Bingkai Peta: Keterangan Singkat & Tombol Tantangan Penjelajah */}
@@ -544,6 +673,15 @@ export function App() {
               </button>
             </div>
             <div className="flex items-center gap-4">
+              <button 
+                id="btn-footer-input-data"
+                onClick={() => setIsInputDataModalOpen(true)} 
+                className="hover:text-white cursor-pointer flex items-center gap-1 text-amber-400 font-medium"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Input Data Objek</span>
+              </button>
+              <span>•</span>
               <button onClick={() => setIsAboutOpen(true)} className="hover:text-white cursor-pointer">
                 Proposal & Tim FPK 2026
               </button>
@@ -629,6 +767,21 @@ export function App() {
         onUpdateSitesFromSheets={handleUpdateSitesFromSheets}
         activeSpreadsheet={activeSpreadsheet}
         setActiveSpreadsheet={handleSetActiveSpreadsheet}
+      />
+
+      {/* 8. Input & Manajemen Data Objek Budaya (Tersimpan Otomatis di Link) */}
+      <InputDataModal
+        isOpen={isInputDataModalOpen}
+        onClose={() => setIsInputDataModalOpen(false)}
+        sites={sitesData}
+        onSaveSite={handleSaveCulturalSite}
+        onBatchImportSites={handleBatchImportCulturalSites}
+        onDeleteSite={handleDeleteCulturalSite}
+        onSelectAndOpenSite={(site) => {
+          setSelectedSite(site);
+          setActiveTab('map');
+          recordSiteVisit(site.id);
+        }}
       />
 
     </div>

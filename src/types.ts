@@ -1,6 +1,21 @@
-export type KelurahanType = 'Kelurahan Boya' | 'Kelurahan Gunung Bale' | 'Kelurahan Tanjung Batu' | 'Kelurahan Labuan Bajo';
+export type KelurahanType = 
+  | 'Kelurahan Boya' 
+  | 'Kelurahan Gunung Bale' 
+  | 'Kelurahan Tanjung Batu' 
+  | 'Kelurahan Labuan Bajo' 
+  | string;
 
-export type CategoryType = 'Maritim & Pelabuhan' | 'Kolonial & Pemerintahan' | 'Arsitektur & Rumah Adat' | 'Religi & Multikultural' | 'Pertahanan & Pengawasan';
+export type CategoryType = 
+  | 'Maritim & Pelabuhan' 
+  | 'Kolonial & Pemerintahan' 
+  | 'Arsitektur & Rumah Adat' 
+  | 'Religi & Multikultural' 
+  | 'Pertahanan & Pengawasan'
+  | 'Situs'
+  | 'Kawasan'
+  | 'Bangunan'
+  | 'Struktur'
+  | string;
 
 export interface HotspotPOI {
   id: string;

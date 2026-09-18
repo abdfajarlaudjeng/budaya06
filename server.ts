@@ -59,6 +59,38 @@ const getAIClient = () => {
 // In-memory visit counter per site
 const siteExplorationVisits: Record<string, number> = {};
 
+// In-memory storage for custom cultural sites with the requested initial items
+const initialCustomCulturalSites = [
+  {
+    ID: "BUDAYA-352",
+    Nama_Objek: "Pusentasi (Pusat Laut)",
+    Kategori: "Situs",
+    Deskripsi: "Pusentasi (pusat Laut) adalah Sumur Raksasa yang terbentuk secara alami berdiameter 10 meter dan mempunyai kedalaman 7 meter. Nama Pusentasi dalam bahasa Kaili (suku asli Sulawesi Tengah) berasal dari kata \"Pusen\" berarti Pusat dan \"Tasi\" berarti Laut. Air di dalamnya berasa asin seperti air laut dan berwarna jernih kebiru-biruan. Diduga ada sebuah lubang yang menghubungkan antara pantai dan pusentasi, karenanya jaraknya sekitar 300 meter. Keunikan pusentasi airnya tidak pernah keruh dan akan mengalami pasang apabila air laut sedang surut dan demikian pula sebaliknya. Memiliki legenda cerita rakyat yang oleh Jamrin Abubakar seorang wartawan di Donggala telah menulisnya dalam sebuah buku berjudul Pusentasi Cerita Rakyat Kabupaten Donggala.",
+    Latitude: -0.7101073,
+    Longitude: 119.6638642,
+    URL_Gambar: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfH06gTE6NxCKLfyPO5y1WUmqfqCivx76S_jFkUcksheiTQzsxHUQXp1DyKPS0kvpgo4WjUjxsb0ugjcUeQApIPSZXlocAXk2PgxqrQ-hjA05LfBih0lLBhGdWr7kkYGQOCJ5tPg=s680-w680-h510-rw",
+    URL_Gambar_360: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfH06gTE6NxCKLfyPO5y1WUmqfqCivx76S_jFkUcksheiTQzsxHUQXp1DyKPS0kvpgo4WjUjxsb0ugjcUeQApIPSZXlocAXk2PgxqrQ-hjA05LfBih0lLBhGdWr7kkYGQOCJ5tPg=s680-w680-h510-rw",
+    URL_Video: "https://www.youtube.com/watch?v=zgKjAvmdY5o",
+    Gambar_Lama: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfH06gTE6NxCKLfyPO5y1WUmqfqCivx76S_jFkUcksheiTQzsxHUQXp1DyKPS0kvpgo4WjUjxsb0ugjcUeQApIPSZXlocAXk2PgxqrQ-hjA05LfBih0lLBhGdWr7kkYGQOCJ5tPg=s680-w680-h510-rw",
+    Gambar_Baru: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlfH06gTE6NxCKLfyPO5y1WUmqfqCivx76S_jFkUcksheiTQzsxHUQXp1DyKPS0kvpgo4WjUjxsb0ugjcUeQApIPSZXlocAXk2PgxqrQ-hjA05LfBih0lLBhGdWr7kkYGQOCJ5tPg=s680-w680-h510-rw"
+  },
+  {
+    ID: "gedung-bioskop",
+    Nama_Objek: "Gedung Bioskop Donggala (Gembira Theater)",
+    Kategori: "Kawasan",
+    Deskripsi: "Bioskop Donggala (Gembira Theater) merupakan saksi bisu denyut kehidupan urban dan budaya hiburan rakyat di Donggala pada era keemasan pelabuhan dan perdagangan. Bekas loket tiketnya masih memperlihatkan jejak interaksi masyarakat menikmati film-film klasik masa lampau.",
+    Latitude: -0.6683706,
+    Longitude: 119.7385271,
+    URL_Gambar: "https://assets-a2.kompasiana.com/items/album/2025/06/19/dua-bekas-loket-pertama-di-gedung-gembira-theater-yang-sangat-lama-digunakan-foto-jamrin-ab-6853f963ed641537973f6932.jpg?t=o&v=770",
+    URL_Gambar_360: "https://assets-a2.kompasiana.com/items/album/2025/06/19/dua-bekas-loket-pertama-di-gedung-gembira-theater-yang-sangat-lama-digunakan-foto-jamrin-ab-6853f963ed641537973f6932.jpg?t=o&v=770",
+    URL_Video: "https://www.youtube.com/watch?v=zgKjAvmdY5o",
+    Gambar_Lama: "https://assets-a2.kompasiana.com/items/album/2025/06/19/dua-bekas-loket-pertama-di-gedung-gembira-theater-yang-sangat-lama-digunakan-foto-jamrin-ab-6853f963ed641537973f6932.jpg?t=o&v=770",
+    Gambar_Baru: "https://assets-a2.kompasiana.com/items/album/2025/06/19/dua-bekas-loket-pertama-di-gedung-gembira-theater-yang-sangat-lama-digunakan-foto-jamrin-ab-6853f963ed641537973f6932.jpg?t=o&v=770"
+  }
+];
+
+let serverCustomSites: any[] = [...initialCustomCulturalSites];
+
 // API Health Check
 app.get('/api/health', (req, res) => {
   res.json({
@@ -79,6 +111,117 @@ app.post('/api/visits/:siteId', (req, res) => {
   const { siteId } = req.params;
   siteExplorationVisits[siteId] = (siteExplorationVisits[siteId] || 0) + 1;
   res.json({ siteId, count: siteExplorationVisits[siteId] });
+});
+
+// API: Get All Custom Cultural Sites
+app.get('/api/sites', (req, res) => {
+  res.json({ sites: serverCustomSites });
+});
+
+// API: Save or Update a Cultural Site (Automatic Link & Storage)
+app.post('/api/sites', (req, res) => {
+  try {
+    const raw = req.body;
+    if (!raw.Nama_Objek) {
+      return res.status(400).json({ error: 'Nama_Objek diperlukan.' });
+    }
+
+    const cleanId = (raw.ID && String(raw.ID).trim()) 
+      ? String(raw.ID).trim() 
+      : `BUDAYA-${Date.now().toString().slice(-4)}`;
+
+    const newObj = {
+      ID: cleanId,
+      Nama_Objek: String(raw.Nama_Objek).trim(),
+      Kategori: String(raw.Kategori || 'Situs').trim(),
+      Deskripsi: String(raw.Deskripsi || '').trim(),
+      Latitude: typeof raw.Latitude === 'number' ? raw.Latitude : parseFloat(String(raw.Latitude || '-0.6728')),
+      Longitude: typeof raw.Longitude === 'number' ? raw.Longitude : parseFloat(String(raw.Longitude || '119.7423')),
+      URL_Gambar: String(raw.URL_Gambar || '').trim(),
+      URL_Gambar_360: String(raw.URL_Gambar_360 || '').trim(),
+      URL_Video: String(raw.URL_Video || '').trim(),
+      Gambar_Lama: String(raw.Gambar_Lama || '').trim(),
+      Gambar_Baru: String(raw.Gambar_Baru || '').trim(),
+      updatedAt: new Date().toISOString()
+    };
+
+    // Upsert into server array
+    const existingIdx = serverCustomSites.findIndex(s => s.ID === cleanId);
+    if (existingIdx >= 0) {
+      serverCustomSites[existingIdx] = newObj;
+    } else {
+      serverCustomSites.push(newObj);
+    }
+
+    // Direct link generated for the site
+    const directLink = `/?tab=map&site=${encodeURIComponent(cleanId)}`;
+
+    res.json({
+      success: true,
+      site: newObj,
+      siteId: cleanId,
+      link: directLink,
+      message: 'Data objek budaya berhasil disimpan otomatis di tautan/link.'
+    });
+  } catch (err: any) {
+    console.error('Error saving site:', err);
+    res.status(500).json({ error: 'Gagal menyimpan data objek budaya.' });
+  }
+});
+
+// API: Batch Save / Import Cultural Sites
+app.post('/api/sites/batch', (req, res) => {
+  try {
+    const { sites } = req.body;
+    if (!Array.isArray(sites)) {
+      return res.status(400).json({ error: 'Parameter sites harus berupa array.' });
+    }
+
+    for (const raw of sites) {
+      if (!raw.Nama_Objek) continue;
+      const cleanId = (raw.ID && String(raw.ID).trim()) 
+        ? String(raw.ID).trim() 
+        : `BUDAYA-${Date.now().toString().slice(-4)}`;
+
+      const newObj = {
+        ID: cleanId,
+        Nama_Objek: String(raw.Nama_Objek).trim(),
+        Kategori: String(raw.Kategori || 'Situs').trim(),
+        Deskripsi: String(raw.Deskripsi || '').trim(),
+        Latitude: typeof raw.Latitude === 'number' ? raw.Latitude : parseFloat(String(raw.Latitude || '-0.6728')),
+        Longitude: typeof raw.Longitude === 'number' ? raw.Longitude : parseFloat(String(raw.Longitude || '119.7423')),
+        URL_Gambar: String(raw.URL_Gambar || '').trim(),
+        URL_Gambar_360: String(raw.URL_Gambar_360 || '').trim(),
+        URL_Video: String(raw.URL_Video || '').trim(),
+        Gambar_Lama: String(raw.Gambar_Lama || '').trim(),
+        Gambar_Baru: String(raw.Gambar_Baru || '').trim(),
+        updatedAt: new Date().toISOString()
+      };
+
+      const existingIdx = serverCustomSites.findIndex(s => s.ID === cleanId);
+      if (existingIdx >= 0) {
+        serverCustomSites[existingIdx] = newObj;
+      } else {
+        serverCustomSites.push(newObj);
+      }
+    }
+
+    res.json({
+      success: true,
+      totalCount: serverCustomSites.length,
+      message: 'Batch import data berhasil disimpan.'
+    });
+  } catch (err: any) {
+    console.error('Error in batch sites:', err);
+    res.status(500).json({ error: 'Gagal memproses batch import data.' });
+  }
+});
+
+// API: Delete Custom Cultural Site
+app.delete('/api/sites/:siteId', (req, res) => {
+  const { siteId } = req.params;
+  serverCustomSites = serverCustomSites.filter(s => s.ID !== siteId);
+  res.json({ success: true, siteId, totalCount: serverCustomSites.length });
 });
 
 // API: AI Talking Tour Guide Persona (Google Arts & Culture Talking Tours inspired)

@@ -24,7 +24,8 @@ import {
   ArrowLeftRight,
   Calendar,
   Camera,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Plus
 } from 'lucide-react';
 import { 
   MapContainer, 
@@ -224,6 +225,7 @@ interface InteractiveMapProps {
   onSelectSite: (site: HeritageSite) => void;
   onOpen360Tour: (site: HeritageSite) => void;
   onOpenTimeSlider?: (site: HeritageSite) => void;
+  onOpenInputData?: () => void;
 }
 
 export const InteractiveMap: React.FC<InteractiveMapProps> = ({
@@ -232,7 +234,8 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
   visitedSiteIds = [],
   onSelectSite,
   onOpen360Tour,
-  onOpenTimeSlider
+  onOpenTimeSlider,
+  onOpenInputData
 }) => {
   const visitCounts = useAllVisitCounts();
   const [language, setLanguage] = useState<LanguageKey>('id');
@@ -421,6 +424,20 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
           >
             <Search className="w-5 h-5 text-stone-700" />
           </button>
+
+          {/* Quick Input Data Objek Budaya Button */}
+          {onOpenInputData && (
+            <button
+              id="btn-map-input-data"
+              onClick={onOpenInputData}
+              title="Input Objek Budaya Baru (Tersimpan Otomatis)"
+              className="h-10 sm:h-11 px-3.5 rounded-full bg-[#c85a32] hover:bg-[#b8502a] text-white border border-[#c85a32]/80 shadow-xl flex items-center gap-1.5 transition-all transform hover:scale-105 active:scale-95 cursor-pointer text-xs font-semibold"
+            >
+              <Plus className="w-4 h-4" />
+              <span className="hidden sm:inline">Input Data Objek</span>
+              <span className="sm:hidden">Input</span>
+            </button>
+          )}
 
           {/* Expandable Search Input Bar */}
           {isSearchOpen && (
