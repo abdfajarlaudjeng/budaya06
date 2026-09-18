@@ -249,12 +249,24 @@ export const InputDataModal: React.FC<InputDataModalProps> = ({
             </div>
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-2 rounded-xl text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <a
+              href="/download-html"
+              download="dijelajah-donggala-cagar-budaya.html"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 text-xs font-semibold transition-all"
+              title="Unduh satu file HTML lengkap untuk dibuka mandiri tanpa server"
+            >
+              <Download className="w-3.5 h-3.5 text-amber-700" />
+              <span>Unduh File HTML</span>
+            </a>
+
+            <button
+              onClick={onClose}
+              className="p-2 rounded-xl text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* =====================================================================
@@ -744,14 +756,26 @@ export const InputDataModal: React.FC<InputDataModalProps> = ({
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-stone-200">
-                <button
-                  type="button"
-                  onClick={handleDownloadCSV}
-                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-stone-300 text-xs font-semibold text-stone-700 hover:bg-stone-100 flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <Download className="w-4 h-4" />
-                  <span>Unduh Semua Data (.CSV)</span>
-                </button>
+                <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                  <button
+                    type="button"
+                    onClick={handleDownloadCSV}
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-stone-300 text-xs font-semibold text-stone-700 hover:bg-stone-100 flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>Unduh CSV (11 Kolom)</span>
+                  </button>
+
+                  <a
+                    href="/download-html"
+                    download="dijelajah-donggala-cagar-budaya.html"
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 text-xs font-semibold text-amber-900 flex items-center justify-center gap-2 cursor-pointer transition-all"
+                    title="Unduh satu file HTML lengkap tanpa dependensi"
+                  >
+                    <Download className="w-4 h-4 text-amber-700" />
+                    <span>Unduh File HTML Lengkap</span>
+                  </a>
+                </div>
 
                 <button
                   type="button"

@@ -6,7 +6,8 @@ import {
   VolumeX, 
   Users,
   Database,
-  Plus
+  Plus,
+  Download
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -106,6 +107,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="sm:hidden">Input</span>
               </button>
             )}
+
+            {/* Unduh File HTML Mandiri Lengkap */}
+            <a
+              id="btn-nav-download-html"
+              href="/download-html"
+              download="dijelajah-donggala-cagar-budaya.html"
+              title="Unduh File HTML Lengkap untuk dibuka mandiri / offline"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-50 border border-amber-300/80 hover:bg-amber-100 text-amber-900 text-xs font-semibold shadow-xs transition-all cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5 text-amber-700" />
+              <span className="hidden lg:inline">Unduh HTML</span>
+            </a>
 
             {/* Tentang Kami Icon Button */}
             <button

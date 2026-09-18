@@ -10,6 +10,19 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
+app.set('trust proxy', 1);
+
+// Permissive CORS and iframe friendly headers
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 app.use(express.json({ limit: '10mb' }));
 
 // Helper to convert linear16 PCM (24kHz, 1 channel, 16-bit) to standard WAV
@@ -408,6 +421,18 @@ app.post('/api/gemini/tts', async (req, res) => {
       fallbackToWebSpeech: true
     });
   }
+});
+
+// Route to download complete standalone HTML file
+app.get('/download-html', (req, res) => {
+  const htmlPath = path.join(process.cwd(), 'cagar-budaya-donggala.html');
+  res.download(htmlPath, 'dijelajah-donggala-cagar-budaya.html');
+});
+
+// Route to view standalone HTML in browser
+app.get('/cagar-budaya-donggala.html', (req, res) => {
+  const htmlPath = path.join(process.cwd(), 'cagar-budaya-donggala.html');
+  res.sendFile(htmlPath);
 });
 
 async function startServer() {
